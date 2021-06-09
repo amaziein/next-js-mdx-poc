@@ -11,6 +11,7 @@ import Anchor from '../../components/Anchor'
 import { Tab, Tabs } from '../../components/Tabs'
 import Tag from '../../components/Tag'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+import Img from '../../components/Img'
 import { getAnchorUrl } from '../../utils/anchorUtils'
 import styles from './post.module.css'
 
@@ -23,6 +24,7 @@ const components = {
   tab: Tab,
   CustomWrapper,
   Tag,
+  img: Img,
 }
 
 export default function PostPage({ source, frontMatter, anchorsNavItems }) {
