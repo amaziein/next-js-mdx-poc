@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+
+}
+
+.navMenu {
+  flex-grow: 0;
+  min-width: 200px;
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  height: 200px;
+}
+
+.contentWrapper {
+  flex-grow: 1;
+  padding: 16px;
+}
