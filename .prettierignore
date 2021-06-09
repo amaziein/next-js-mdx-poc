@@ -1,0 +1,9 @@
+/build
+/dist
+/cypress_test
+/node_modules
+/package-lock.json
+/reports
+/.next
+/.husky
+/posts

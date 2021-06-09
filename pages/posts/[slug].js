@@ -10,6 +10,8 @@ import Layout from '../../components/Layout'
 import Anchor from '../../components/Anchor'
 import { Tab, Tabs } from '../../components/Tabs'
 import Tag from '../../components/Tag'
+import Code from '../../components/Code'
+import InlineCode from '../../components/InlineCode'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
 import Img from '../../components/Img'
 import { getAnchorUrl } from '../../utils/anchorUtils'
@@ -25,6 +27,8 @@ const components = {
   CustomWrapper,
   Tag,
   img: Img,
+  code: Code,
+  inlineCode: InlineCode,
 }
 
 export default function PostPage({ source, frontMatter, anchorsNavItems }) {
