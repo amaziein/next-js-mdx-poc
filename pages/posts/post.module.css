@@ -1,6 +1,5 @@
 .wrapper {
   display: flex;
-
 }
 
 .navMenu {
@@ -15,4 +14,8 @@
 .contentWrapper {
   flex-grow: 1;
   padding: 16px;
+}
+
+.description {
+  color: gray;
 }

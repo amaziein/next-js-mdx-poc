@@ -7,65 +7,57 @@ import Link from 'next/link'
 import path from 'path'
 import CustomLink from '../../components/CustomLink'
 import Layout from '../../components/Layout'
-import {Tab, Tabs} from '../../components/Tabs'
+import Anchor from '../../components/Anchor'
+import { Tab, Tabs } from '../../components/Tabs'
+import Tag from '../../components/Tag'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+import { getAnchorUrl } from '../../utils/anchorUtils'
 import styles from './post.module.css'
 
-const getAnchorUrl = (name) => `#${name.replace(/ /g,"_")}`
-
-const Anchor = ({children, ...props}) => {
-  const anchorUrl = getAnchorUrl(children)
-  const anchorName = anchorUrl.replace('#', '')
-
-  return <h2 {...props}><a name={anchorName} href={anchorUrl}>{children}</a></h2>
-} 
-
-const CustomWrapper = ({children}) => <div style={{background: 'red'}}>{children}</div>
+const CustomWrapper = ({ children }) => <div style={{ background: 'red' }}>{children}</div>
 
 const components = {
   a: CustomLink,
-  TestComponent: dynamic(() => import('../../components/TestComponent')),
   h2: Anchor,
   tabs: Tabs,
   tab: Tab,
   CustomWrapper,
+  Tag,
 }
 
-export default function PostPage({ source, frontMatter, content, headers }) {
+export default function PostPage({ source, frontMatter, anchorsNavItems }) {
   return (
     <Layout>
       <header>
         <nav>
           <Link href="/">
-            <a>👈 Go back home</a>
+            <a>Go back home</a>
           </Link>
         </nav>
       </header>
       <div className={styles.wrapper}>
         <div className={styles.contentWrapper}>
           <h1>{frontMatter.title}</h1>
-          {frontMatter.description && (
-            <p className="description">{frontMatter.description}</p>
-          )}
+          {frontMatter.description && <p className={styles.description}>{frontMatter.description}</p>}
           <main>
             <MDXRemote {...source} components={components} />
           </main>
         </div>
         <nav className={styles.navMenu}>
-          {headers.map(({title, url}) => <div key={url}><a href={url}>{title}</a></div>)}
+          {anchorsNavItems.map(({ title, url }) => (
+            <div key={url}>
+              <a href={url}>{title}</a>
+            </div>
+          ))}
         </nav>
       </div>
-      
     </Layout>
   )
 }
 
-
-
 export const getStaticProps = async ({ params }) => {
   const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`)
   const source = fs.readFileSync(postFilePath)
-
 
   const { content, data } = matter(source)
 
@@ -78,7 +70,7 @@ export const getStaticProps = async ({ params }) => {
     scope: data,
   })
 
-  const headers = (content.match(/^#+ (.*$)/gim) || []).map((headerItem) => {
+  const anchorsNavItems = (content.match(/^#+ (.*$)/gim) || []).map((headerItem) => {
     const title = headerItem.replace(/^#+ (.*$)/gim, '$1')
     return {
       title,
@@ -90,18 +82,13 @@ export const getStaticProps = async ({ params }) => {
     props: {
       source: mdxSource,
       frontMatter: data,
-      content,
-      headers,
+      anchorsNavItems,
     },
   }
 }
 
 export const getStaticPaths = async () => {
-  const paths = postFilePaths
-    // Remove file extensions for page paths
-    .map((path) => path.replace(/\.mdx?$/, ''))
-    // Map the path into the static paths object required by Next.js
-    .map((slug) => ({ params: { slug } }))
+  const paths = postFilePaths.map((path) => path.replace(/\.mdx?$/, '')).map((slug) => ({ params: { slug } }))
 
   return {
     paths,

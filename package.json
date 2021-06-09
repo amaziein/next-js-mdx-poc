@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "classnames": "^2.3.1",
+    "cn": "^0.1.1",
     "gray-matter": "^4.0.2",
     "next": "latest",
     "next-mdx-remote": "^3.0.1",

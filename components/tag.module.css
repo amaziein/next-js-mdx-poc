@@ -1,0 +1,20 @@
+.warning {
+  background: orange;
+  color: white;
+}
+
+.tag {
+  padding: 4px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.error {
+  background: red;
+  color: white;
+}
+
+.success {
+  background: green;
+  color: white;
+}
